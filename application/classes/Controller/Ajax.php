@@ -31,6 +31,30 @@ class Controller_Ajax extends Controller
             $task->values($data);
             $task->save();
 
+            if ($data['type_id'] != 3 && $data['options']) {
+                foreach ($data['options'] as $options) {
+
+                    $option = ORM::factory('Option');
+
+                    $values = Arr::extract($options, array('text', 'is_right'));
+                    $values['task_id'] = !$id ? $task->id : $id;
+
+                    $option->values($values);
+                    $option->save();
+                }
+            } else if ($data['type_id'] == 3) {
+
+                $option = ORM::factory('Option');
+
+                $values = array('text' => $data['solution_text'], 'is_right' => "0");
+                $values['task_id'] = !$id ? $task->id : $id;
+
+                $option->values($values);
+                $option->save();
+            } else {
+                return $this->response->body(json_encode(array('error' => 'неизвестное значение для type_id')));
+            }
+
             try {
 
                 $response = array('state' => 1);
