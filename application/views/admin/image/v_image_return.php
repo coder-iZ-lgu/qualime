@@ -1,0 +1,1 @@
+<?=HTML::image($src, array('alt'=>$alt, 'class'=>'uploaded-image'))?>

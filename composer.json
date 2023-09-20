@@ -1,0 +1,6 @@
+{
+	"require": {
+		"phpunit/phpunit": "3.7.*",
+		"tomlankhorst/kohana-3.3-mysqli": "dev-master"
+	}
+}

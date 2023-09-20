@@ -1,0 +1,21 @@
+.clearfix {
+	display: inline-block;
+}
+ 
+html[xmlns] .clearfix {
+	display: block;
+}
+ 
+* html .clearfix {
+	height: 1%;
+}
+
+* html body {height: 100%;}
+
+* html body{
+	color: #f00 !important;
+}
+
+h1, h2, h3{
+	font-weight:normal;
+}

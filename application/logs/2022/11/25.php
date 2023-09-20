@@ -1,0 +1,76 @@
+<?php defined('SYSPATH') OR die('No direct script access.'); ?>
+
+2022-11-25 02:23:17 --- EMERGENCY: ORM_Validation_Exception [ 0 ]: Failed to validate array ~ MODPATH/orm/classes/Kohana/ORM.php [ 1272 ] in /home/qualime/testy.quali.me/public_html/modules/orm/classes/Kohana/ORM.php:1299
+2022-11-25 02:23:17 --- DEBUG: #0 /home/qualime/testy.quali.me/public_html/modules/orm/classes/Kohana/ORM.php(1299): Kohana_ORM->check(Object(Validation))
+#1 /home/qualime/testy.quali.me/public_html/modules/orm/classes/Model/Auth/User.php(167): Kohana_ORM->create(Object(Validation))
+#2 /home/qualime/testy.quali.me/public_html/application/classes/Controller/Ajax.php(453): Model_Auth_User->create_user(Array, Array)
+#3 /home/qualime/testy.quali.me/public_html/application/classes/Controller/Ajax.php(479): Controller_Ajax->createUser(Array)
+#4 /home/qualime/testy.quali.me/public_html/application/classes/Controller/Ajax.php(423): Controller_Ajax->createStudent(Array)
+#5 /home/qualime/testy.quali.me/public_html/application/classes/Controller/Ajax.php(286): Controller_Ajax->createStudentsBulk(Array, '42')
+#6 /home/qualime/testy.quali.me/public_html/system/classes/Kohana/Controller.php(84): Controller_Ajax->action_addstudents()
+#7 [internal function]: Kohana_Controller->execute()
+#8 /home/qualime/testy.quali.me/public_html/system/classes/Kohana/Request/Client/Internal.php(97): ReflectionMethod->invoke(Object(Controller_Ajax))
+#9 /home/qualime/testy.quali.me/public_html/system/classes/Kohana/Request/Client.php(114): Kohana_Request_Client_Internal->execute_request(Object(Request), Object(Response))
+#10 /home/qualime/testy.quali.me/public_html/system/classes/Kohana/Request.php(990): Kohana_Request_Client->execute(Object(Request))
+#11 /home/qualime/testy.quali.me/public_html/index.php(118): Kohana_Request->execute()
+#12 {main} in /home/qualime/testy.quali.me/public_html/modules/orm/classes/Kohana/ORM.php:1299
+2022-11-25 02:23:19 --- EMERGENCY: ORM_Validation_Exception [ 0 ]: Failed to validate array ~ MODPATH/orm/classes/Kohana/ORM.php [ 1272 ] in /home/qualime/testy.quali.me/public_html/modules/orm/classes/Kohana/ORM.php:1299
+2022-11-25 02:23:19 --- DEBUG: #0 /home/qualime/testy.quali.me/public_html/modules/orm/classes/Kohana/ORM.php(1299): Kohana_ORM->check(Object(Validation))
+#1 /home/qualime/testy.quali.me/public_html/modules/orm/classes/Model/Auth/User.php(167): Kohana_ORM->create(Object(Validation))
+#2 /home/qualime/testy.quali.me/public_html/application/classes/Controller/Ajax.php(453): Model_Auth_User->create_user(Array, Array)
+#3 /home/qualime/testy.quali.me/public_html/application/classes/Controller/Ajax.php(479): Controller_Ajax->createUser(Array)
+#4 /home/qualime/testy.quali.me/public_html/application/classes/Controller/Ajax.php(423): Controller_Ajax->createStudent(Array)
+#5 /home/qualime/testy.quali.me/public_html/application/classes/Controller/Ajax.php(286): Controller_Ajax->createStudentsBulk(Array, '42')
+#6 /home/qualime/testy.quali.me/public_html/system/classes/Kohana/Controller.php(84): Controller_Ajax->action_addstudents()
+#7 [internal function]: Kohana_Controller->execute()
+#8 /home/qualime/testy.quali.me/public_html/system/classes/Kohana/Request/Client/Internal.php(97): ReflectionMethod->invoke(Object(Controller_Ajax))
+#9 /home/qualime/testy.quali.me/public_html/system/classes/Kohana/Request/Client.php(114): Kohana_Request_Client_Internal->execute_request(Object(Request), Object(Response))
+#10 /home/qualime/testy.quali.me/public_html/system/classes/Kohana/Request.php(990): Kohana_Request_Client->execute(Object(Request))
+#11 /home/qualime/testy.quali.me/public_html/index.php(118): Kohana_Request->execute()
+#12 {main} in /home/qualime/testy.quali.me/public_html/modules/orm/classes/Kohana/ORM.php:1299
+2022-11-25 02:23:30 --- EMERGENCY: ORM_Validation_Exception [ 0 ]: Failed to validate array ~ MODPATH/orm/classes/Kohana/ORM.php [ 1272 ] in /home/qualime/testy.quali.me/public_html/modules/orm/classes/Kohana/ORM.php:1299
+2022-11-25 02:23:30 --- DEBUG: #0 /home/qualime/testy.quali.me/public_html/modules/orm/classes/Kohana/ORM.php(1299): Kohana_ORM->check(Object(Validation))
+#1 /home/qualime/testy.quali.me/public_html/modules/orm/classes/Model/Auth/User.php(167): Kohana_ORM->create(Object(Validation))
+#2 /home/qualime/testy.quali.me/public_html/application/classes/Controller/Ajax.php(453): Model_Auth_User->create_user(Array, Array)
+#3 /home/qualime/testy.quali.me/public_html/application/classes/Controller/Ajax.php(479): Controller_Ajax->createUser(Array)
+#4 /home/qualime/testy.quali.me/public_html/application/classes/Controller/Ajax.php(423): Controller_Ajax->createStudent(Array)
+#5 /home/qualime/testy.quali.me/public_html/application/classes/Controller/Ajax.php(286): Controller_Ajax->createStudentsBulk(Array, '42')
+#6 /home/qualime/testy.quali.me/public_html/system/classes/Kohana/Controller.php(84): Controller_Ajax->action_addstudents()
+#7 [internal function]: Kohana_Controller->execute()
+#8 /home/qualime/testy.quali.me/public_html/system/classes/Kohana/Request/Client/Internal.php(97): ReflectionMethod->invoke(Object(Controller_Ajax))
+#9 /home/qualime/testy.quali.me/public_html/system/classes/Kohana/Request/Client.php(114): Kohana_Request_Client_Internal->execute_request(Object(Request), Object(Response))
+#10 /home/qualime/testy.quali.me/public_html/system/classes/Kohana/Request.php(990): Kohana_Request_Client->execute(Object(Request))
+#11 /home/qualime/testy.quali.me/public_html/index.php(118): Kohana_Request->execute()
+#12 {main} in /home/qualime/testy.quali.me/public_html/modules/orm/classes/Kohana/ORM.php:1299
+2022-11-25 02:23:43 --- EMERGENCY: ORM_Validation_Exception [ 0 ]: Failed to validate array ~ MODPATH/orm/classes/Kohana/ORM.php [ 1272 ] in /home/qualime/testy.quali.me/public_html/modules/orm/classes/Kohana/ORM.php:1299
+2022-11-25 02:23:43 --- DEBUG: #0 /home/qualime/testy.quali.me/public_html/modules/orm/classes/Kohana/ORM.php(1299): Kohana_ORM->check(Object(Validation))
+#1 /home/qualime/testy.quali.me/public_html/modules/orm/classes/Model/Auth/User.php(167): Kohana_ORM->create(Object(Validation))
+#2 /home/qualime/testy.quali.me/public_html/application/classes/Controller/Ajax.php(453): Model_Auth_User->create_user(Array, Array)
+#3 /home/qualime/testy.quali.me/public_html/application/classes/Controller/Ajax.php(479): Controller_Ajax->createUser(Array)
+#4 /home/qualime/testy.quali.me/public_html/application/classes/Controller/Ajax.php(423): Controller_Ajax->createStudent(Array)
+#5 /home/qualime/testy.quali.me/public_html/application/classes/Controller/Ajax.php(286): Controller_Ajax->createStudentsBulk(Array, '42')
+#6 /home/qualime/testy.quali.me/public_html/system/classes/Kohana/Controller.php(84): Controller_Ajax->action_addstudents()
+#7 [internal function]: Kohana_Controller->execute()
+#8 /home/qualime/testy.quali.me/public_html/system/classes/Kohana/Request/Client/Internal.php(97): ReflectionMethod->invoke(Object(Controller_Ajax))
+#9 /home/qualime/testy.quali.me/public_html/system/classes/Kohana/Request/Client.php(114): Kohana_Request_Client_Internal->execute_request(Object(Request), Object(Response))
+#10 /home/qualime/testy.quali.me/public_html/system/classes/Kohana/Request.php(990): Kohana_Request_Client->execute(Object(Request))
+#11 /home/qualime/testy.quali.me/public_html/index.php(118): Kohana_Request->execute()
+#12 {main} in /home/qualime/testy.quali.me/public_html/modules/orm/classes/Kohana/ORM.php:1299
+2022-11-25 05:48:22 --- EMERGENCY: Kohana_Exception [ 0 ]: Cannot delete section model because it is not loaded. ~ MODPATH/orm/classes/Kohana/ORM.php [ 1431 ] in /home/qualime/testy.quali.me/public_html/application/classes/Controller/Ajax.php:163
+2022-11-25 05:48:22 --- DEBUG: #0 /home/qualime/testy.quali.me/public_html/application/classes/Controller/Ajax.php(163): Kohana_ORM->delete()
+#1 /home/qualime/testy.quali.me/public_html/system/classes/Kohana/Controller.php(84): Controller_Ajax->action_deletesection()
+#2 [internal function]: Kohana_Controller->execute()
+#3 /home/qualime/testy.quali.me/public_html/system/classes/Kohana/Request/Client/Internal.php(97): ReflectionMethod->invoke(Object(Controller_Ajax))
+#4 /home/qualime/testy.quali.me/public_html/system/classes/Kohana/Request/Client.php(114): Kohana_Request_Client_Internal->execute_request(Object(Request), Object(Response))
+#5 /home/qualime/testy.quali.me/public_html/system/classes/Kohana/Request.php(990): Kohana_Request_Client->execute(Object(Request))
+#6 /home/qualime/testy.quali.me/public_html/index.php(118): Kohana_Request->execute()
+#7 {main} in /home/qualime/testy.quali.me/public_html/application/classes/Controller/Ajax.php:163
+2022-11-25 05:48:33 --- EMERGENCY: Kohana_Exception [ 0 ]: Cannot delete section model because it is not loaded. ~ MODPATH/orm/classes/Kohana/ORM.php [ 1431 ] in /home/qualime/testy.quali.me/public_html/application/classes/Controller/Ajax.php:163
+2022-11-25 05:48:33 --- DEBUG: #0 /home/qualime/testy.quali.me/public_html/application/classes/Controller/Ajax.php(163): Kohana_ORM->delete()
+#1 /home/qualime/testy.quali.me/public_html/system/classes/Kohana/Controller.php(84): Controller_Ajax->action_deletesection()
+#2 [internal function]: Kohana_Controller->execute()
+#3 /home/qualime/testy.quali.me/public_html/system/classes/Kohana/Request/Client/Internal.php(97): ReflectionMethod->invoke(Object(Controller_Ajax))
+#4 /home/qualime/testy.quali.me/public_html/system/classes/Kohana/Request/Client.php(114): Kohana_Request_Client_Internal->execute_request(Object(Request), Object(Response))
+#5 /home/qualime/testy.quali.me/public_html/system/classes/Kohana/Request.php(990): Kohana_Request_Client->execute(Object(Request))
+#6 /home/qualime/testy.quali.me/public_html/index.php(118): Kohana_Request->execute()
+#7 {main} in /home/qualime/testy.quali.me/public_html/application/classes/Controller/Ajax.php:163

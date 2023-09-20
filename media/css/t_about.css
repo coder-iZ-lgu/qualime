@@ -1,0 +1,73 @@
+body{
+	font-family:Roboto, sans-serif !important;
+	margin: 0 !important;
+	padding: 0 !important;
+}
+div, p, span, a, ul, li, ol {
+	box-sizing: border-box !important;
+}
+h1, h2, h3, h4, h5, h6 {
+	margin: 0 !important;
+}
+.container1 {
+	width: 700px !important;
+	padding-top: 15px !important;
+	background-color: #fff !important;
+	margin: 0 auto !important;
+}
+.list_of_topic{
+	margin: 0 !important;
+	padding-top: 13px !important;
+	font-size: 16px !important;
+}
+.list_of_topic li{
+	margin-bottom: 8px !important;
+}
+.text{
+	width: 650px !important;
+	padding-bottom: 40px !important;
+	margin: 0 auto !important;	
+}
+.content{
+    background: #fff !important; 
+	margin-top: 150px !important;
+}
+.page-content{
+	font-family: Merriweather, serif !important;
+	font-size: 24px !important;
+}
+.label{
+	position: absolute !important;
+	margin-left: 234px !important;
+	padding: 7px 14px 7px 30px !important;
+	text-transform: uppercase !important;
+	font-size: 12px !important;
+	border-radius: 0px 4px 4px 0 !important;
+	letter-spacing: 0.5px !important;
+	font-weight: 300 !important;
+}
+.list{
+	list-style-type: disc !important;
+	padding: 0 !important; 
+}
+.heading{
+	font-size: 28px !important;
+}
+.audience{
+    text-indent: 0 !important;
+}
+.audience, .sections, .occupation, .control_mode, .interactive_mode, .semi-interactive_mode, .check, .correction{
+	padding: 20px 0 40px 0 !important; 
+}
+.after_label{
+	padding-top: 25px !important;
+}
+.photo{
+	display: block !important;
+}
+.after_photo{
+	margin-top: 50px !important;	
+}
+.results{
+	margin-bottom: 150px !important;
+}
