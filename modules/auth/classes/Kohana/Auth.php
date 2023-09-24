@@ -1,4 +1,4 @@
-<?php defined('SYSPATH') OR die('No direct access allowed.');
+<?php defined('SYSPATH') or die('No direct access allowed.');
 /**
  * User authorization library. Handles user login and logout, as well as secure
  * password hashing.
@@ -8,7 +8,8 @@
  * @copyright  (c) 2007-2012 Kohana Team
  * @license    http://kohanaframework.org/license
  */
-abstract class Kohana_Auth {
+abstract class Kohana_Auth
+{
 
 	// Auth instances
 	protected static $_instance;
@@ -20,18 +21,16 @@ abstract class Kohana_Auth {
 	 */
 	public static function instance()
 	{
-		if ( ! isset(Auth::$_instance))
-		{
+		if (!isset(Auth::$_instance)) {
 			// Load the configuration for this type
 			$config = Kohana::$config->load('auth');
 
-			if ( ! $type = $config->get('driver'))
-			{
+			if (!$type = $config->get('driver')) {
 				$type = 'file';
 			}
 
 			// Set the session class name
-			$class = 'Auth_'.ucfirst($type);
+			$class = 'Auth_' . ucfirst($type);
 
 			// Create a new session instance
 			Auth::$_instance = new $class($config);
@@ -101,13 +100,10 @@ abstract class Kohana_Auth {
 	 */
 	public function logout($destroy = FALSE, $logout_all = FALSE)
 	{
-		if ($destroy === TRUE)
-		{
+		if ($destroy === TRUE) {
 			// Destroy the session completely
 			$this->_session->destroy();
-		}
-		else
-		{
+		} else {
 			// Remove the user from the session
 			$this->_session->delete($this->_config['session_key']);
 
@@ -116,7 +112,7 @@ abstract class Kohana_Auth {
 		}
 
 		// Double check
-		return ! $this->logged_in();
+		return !$this->logged_in();
 	}
 
 	/**
@@ -151,7 +147,7 @@ abstract class Kohana_Auth {
 	 */
 	public function hash($str)
 	{
-		if ( ! $this->_config['hash_key'])
+		if (!$this->_config['hash_key'])
 			throw new Kohana_Exception('A valid hash key must be set in your auth config.');
 
 		return hash_hmac($this->_config['hash_method'], $str, $this->_config['hash_key']);
@@ -159,6 +155,7 @@ abstract class Kohana_Auth {
 
 	protected function complete_login($user)
 	{
+		
 		// Regenerate session_id
 		$this->_session->regenerate();
 

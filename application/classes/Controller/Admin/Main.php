@@ -9,13 +9,13 @@ class Controller_Admin_Main extends Controller_Admin {
 
     public function action_index()
     {
-        // try{
-        //     // if (!Auth::instance()->logged_in('admin'))
-        //     // {
-        //     //     throw new Kohana_HTTP_Exception_403("You have no permission to be here");
-        //     // }
-        //     // Display the install page
-        // }
+        try{
+            if (!Auth::instance()->logged_in('admin'))
+            {
+                throw new Kohana_HTTP_Exception_403("You have no permission to be here");
+            }
+            // Display the install page
+        }
         // catch(Kohana_HTTP_Exception_403 $e)
         // {
         //     $this->request->status = 403;
@@ -28,19 +28,19 @@ class Controller_Admin_Main extends Controller_Admin {
 
     public function action_verification()
     {
-        // try{
-        //     // if (!Auth::instance()->logged_in('admin'))
-        //     // {
-        //     //     throw new Kohana_HTTP_Exception_403("You have no permission to be here");
-        //     // }
-        //     // Display the install page
-        // }
-        // catch(Kohana_HTTP_Exception_403 $e)
-        // {
-        //     $this->request->status = 403;
-        //     echo "ERROR!";
-        //     echo $e->getMessage();
-        // }
+        try{
+            if (!Auth::instance()->logged_in('admin'))
+            {
+                throw new Kohana_HTTP_Exception_403("You have no permission to be here");
+            }
+            // Display the install page
+        }
+        catch(Kohana_HTTP_Exception_403 $e)
+        {
+            $this->request->status = 403;
+            echo "ERROR!";
+            echo $e->getMessage();
+        }
 
         $users = ORM::factory('User')
             ->join('roles_users')

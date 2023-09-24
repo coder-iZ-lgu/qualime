@@ -17,9 +17,9 @@ class Controller_Base extends Controller_Template {
         /*Session::$default = 'cookie';*/
         
         //$this->cache = Cache::instance('file');
-        $this->auth = Auth::instance();
-        $this->user = $this->auth->get_user();
-        $this->session = Session::instance();
+        // $this->auth = Auth::instance();
+        // $this->user = $this->auth->get_user();
+        // $this->session = Session::instance();
 
         // Вывод в шаблон
         $this->template->site_name = $settings->site_name;

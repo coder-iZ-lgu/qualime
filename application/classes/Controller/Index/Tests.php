@@ -52,6 +52,7 @@ class Controller_Index_Tests extends Controller_Index
 
 
                 $keys = array();
+
                 foreach ($tasks as $key => $task) {
                     array_push($tmp, Request::factory('tasks/task/' . $task->id)->execute());
                     $keys[] = $key;
@@ -91,6 +92,7 @@ class Controller_Index_Tests extends Controller_Index
         $this->template->scripts[] = 'media/js/qlty.ui.tabs.js';
         $this->template->scripts[] = 'media/js/qlty.core.test.js';
         $this->template->scripts[] = 'media/js/test.js';
+        $this->template->scripts[] = 'media/js/save-answer.js';
     }
 
     public function action_tests()
@@ -156,283 +158,283 @@ class Controller_Index_Tests extends Controller_Index
             $data = Arr::extract($_POST, array('testId', 'answers', 'penalties', 'mode'));
         }
         print_r($data);
-        // $penalties = round(count($data['penalties']) / 2, 1);
-//         //var_dump($data);
-//         $right_answers = 0;
-//         $total_correct_task_answers = 0;
-//         $test = ORM::factory('Test', $data['testId']);
-//         $task = ORM::factory('Task');
+        $penalties = round(count($data['penalties']) / 2, 1);
+        //var_dump($data);
+        $right_answers = 0;
+        $total_correct_task_answers = 0;
+        $test = ORM::factory('Test', $data['testId']);
+        $task = ORM::factory('Task');
 
-        //         $task_option = ORM::factory('Option');
-//         $tmp = array();
-//         $result = array();
-
-
-        //         // Костыль EQ теста
-//         $eq1 = 0;
-//         $eq2 = 0;
-//         $eq3 = 0;
-//         $eq4 = 0;
-//         $eq5 = 0;
-//         $i = 0;
+                $task_option = ORM::factory('Option');
+        $tmp = array();
+        $result = array();
 
 
-
-        //         foreach ($data['answers'] as $answer_key => $answer) {
-//             $task->where('id', '=', $answer['taskId'])->find();
-//             $options = array();
-//             $total_correct_answers = 0;
-//             $total_answers = 0;
-//             $answers_counter = 0;
-
-
-        //             if (isset($answer['options'])) {
-
-        //                 foreach ($answer['options'] as $key => $option) {
-
-        //                     $is_task_correct = "0";
-
-        //                     $task_option->where('id', '=', $option['optionId'])->find();
-//                     $answers_counter++;
-//                     $is_answered_correctly = "0";
-//                     $options[$key]['id'] = $task_option->id;
-//                     $options[$key]['text'] = $task_option->text;
-//                     $options[$key]['answer'] = $option['answer'];
-//                     $options[$key]['is_right'] = $task_option->is_right;
-//                     // Костыль для EQ теста 
-//                     if ($data['testId'] == 184) {
-//                         if (strcmp($options[$key]['answer'], 'false') != 0) {
-//                             $buf = (int) $options[$key]['answer'];
-//                             if ($buf == -3 || $buf == -2 || $buf == -1 || $buf == 1 || $buf == 2 || $buf == 3) {
-//                                 if ($i < 6)
-//                                     $eq1 += $buf;
-//                                 elseif ($i < 6)
-//                                     $eq1 += $buf;
-//                                 elseif ($i < 12)
-//                                     $eq2 += $buf;
-//                                 elseif ($i < 18)
-//                                     $eq3 += $buf;
-//                                 elseif ($i < 24)
-//                                     $eq4 += $buf;
-//                                 else
-//                                     $eq5 += $buf;
-
-        //                             }
-//                         }
-//                         $i++;
-//                     }
+                // Костыль EQ теста
+        $eq1 = 0;
+        $eq2 = 0;
+        $eq3 = 0;
+        $eq4 = 0;
+        $eq5 = 0;
+        $i = 0;
 
 
-        //                     if ($task->type_id === '3') {
-//                         if (strlen($option['answer']) > 0) {
-//                             $total_answers++;
-//                         }
-//                         if (strcmp($task_option->text, $option['answer']) === 0) {
-//                             $total_correct_answers++;
-//                             $right_answers++;
-//                             $is_answered_correctly = "1";
-//                         }
-//                     } else {
-//                         if (filter_var($option['answer'], FILTER_VALIDATE_BOOLEAN)) {
-//                             $total_answers++;
-//                         }
-//                         if (filter_var($task_option->is_right, FILTER_VALIDATE_BOOLEAN) === filter_var($option['answer'], FILTER_VALIDATE_BOOLEAN)) {
-//                             $total_correct_answers++;
-//                             $right_answers++;
-//                             $is_answered_correctly = "1";
-//                         }
-//                     }
 
-        //                     if ($answers_counter === $total_correct_answers) {
-//                         $is_task_correct = '1';
-//                     }
-
-        //                     if ($option['answer'] != 'false' and strlen($option['answer']) > 0) {
-//                         if ($is_answered_correctly == '1') {
-//                             $options[$key]['user-answer-class'] = 'is-answered-correctly';
-//                         } else {
-//                             $options[$key]['user-answer-class'] = 'is-answered-wrong';
-//                         }
-//                     } else {
-//                         $options[$key]['user-answer-class'] = '';
-//                     }
-
-        //                     if ($task_option->is_right === '1') {
-//                         $options[$key]['actual-answer-class'] = 'option-is-right';
-//                     } else {
-//                         $options[$key]['actual-answer-class'] = '';
-//                     }
-//                     //echo $task_option->is_right;
-
-        //                     //var_dump($options);
-//                     $task_option->clear();
-//                 }
-
-        //             }
-//             if ($is_task_correct === '1' && $data['testId'] != 184) {
-//                 $total_correct_task_answers++;
-//             } elseif ($data['testId'] == 184) {
-//                 $EQ = substr($option['answer'], 0, 1);
-//                 $total_correct_task_answers += (int) $EQ;
-//             }
+                foreach ($data['answers'] as $answer_key => $answer) {
+            $task->where('id', '=', $answer['taskId'])->find();
+            $options = array();
+            $total_correct_answers = 0;
+            $total_answers = 0;
+            $answers_counter = 0;
 
 
-        //             $v = View::factory('index/tasks/v_task_check')
-//                 ->bind('options', $options)
-//                 ->bind('task', $task)
-//                 ->bind('is_task_correct', $is_task_correct)
-//                 ->bind('total_answers', $total_answers)
-//                 ->bind('answer_key', $answer_key)
-//                 ->render();
+                    if (isset($answer['options'])) {
 
-        //             array_push($tmp, $v);
-//             $task->clear();
-//         }
-//         $result['total_tasks'] = $test->tasks->find_all()->count();
-//         $result['total_correct_task_answers'] = $total_correct_task_answers;
-//         $result['penalties'] = $penalties;
-//         $result['mode'] = $data['mode'];
-//         $IQorEQ = $this->request->param('audience');
-//         if ($result['total_correct_task_answers'] >= $penalties) {
+                        foreach ($answer['options'] as $key => $option) {
 
-        //             // Проверка на IQ
-//             // IQ Test Словесный
-//             if ($data['testId'] == 185) {
-//                 $result['mark'] = round(90 + ($result['total_correct_task_answers']) * 2.5);
-//             }
-//             // IQ Test Числовой
-//             elseif ($data['testId'] == 186) {
-//                 $result['mark'] = round(72.5 + ($result['total_correct_task_answers']) * 2.5);
-//             }
-//             // ШQ Test - Наглядно-Образный
-//             elseif ($data['testId'] == 187) {
-//                 $result['mark'] = round(81.43 + ($result['total_correct_task_answers']) * 1.42);
-//             }
-//             // EQ Test КОСТЫЛЬ ДЛЯ НАН. Удалить вместе с тестом блять нахуй
-//             elseif ($data['testId'] == 184) {
-//                 echo '<div style="text-align: center"><span class="flaged">Уровень эмоциональной осведомленности: <span class="result"><b>';
-//                 if ($eq1 >= 14)
-//                     echo 'высокий';
-//                 elseif ($eq1 >= 8 && $eq1 <= 13)
-//                     echo 'средний';
-//                 else
-//                     echo 'низкий';
+                            $is_task_correct = "0";
 
-        //                 echo '</span></span></b><hr><span class="flaged">Уровень управления своими эмоциями: <span class="result"><b>';
-//                 if ($eq2 >= 14)
-//                     echo 'высокий';
-//                 elseif ($eq2 >= 8 && $eq2 <= 13)
-//                     echo 'средний';
-//                 else
-//                     echo 'низкий';
+                            $task_option->where('id', '=', $option['optionId'])->find();
+                    $answers_counter++;
+                    $is_answered_correctly = "0";
+                    $options[$key]['id'] = $task_option->id;
+                    $options[$key]['text'] = $task_option->text;
+                    $options[$key]['answer'] = $option['answer'];
+                    $options[$key]['is_right'] = $task_option->is_right;
+                    // Костыль для EQ теста 
+                    if ($data['testId'] == 184) {
+                        if (strcmp($options[$key]['answer'], 'false') != 0) {
+                            $buf = (int) $options[$key]['answer'];
+                            if ($buf == -3 || $buf == -2 || $buf == -1 || $buf == 1 || $buf == 2 || $buf == 3) {
+                                if ($i < 6)
+                                    $eq1 += $buf;
+                                elseif ($i < 6)
+                                    $eq1 += $buf;
+                                elseif ($i < 12)
+                                    $eq2 += $buf;
+                                elseif ($i < 18)
+                                    $eq3 += $buf;
+                                elseif ($i < 24)
+                                    $eq4 += $buf;
+                                else
+                                    $eq5 += $buf;
 
-        //                 echo '</span></span></b><hr><span class="flaged">Уровень самомотивации: <span class="result"><b>';
-//                 if ($eq3 >= 14)
-//                     echo 'высокий';
-//                 elseif ($eq3 >= 8 && $eq3 <= 13)
-//                     echo 'средний';
-//                 else
-//                     echo 'низкий';
+                                    }
+                        }
+                        $i++;
+                    }
 
-        //                 echo '</span></span></b><hr><span class="flaged">Уровень эмпатии: <span class="result"><b>';
-//                 if ($eq4 >= 14)
-//                     echo 'высокий';
-//                 elseif ($eq4 >= 8 && $eq4 <= 13)
-//                     echo 'средний';
-//                 else
-//                     echo 'низкий';
 
-        //                 echo '</span></span></b><hr><span class="flaged">Уровень управления эмоциями других людей: <span class="result"><b>';
-//                 if ($eq5 >= 14)
-//                     echo 'высокий';
-//                 elseif ($eq5 >= 8 && $eq5 <= 13)
-//                     echo 'средний';
-//                 else
-//                     echo 'низкий';
+                            if ($task->type_id === '3') {
+                        if (strlen($option['answer']) > 0) {
+                            $total_answers++;
+                        }
+                        if (strcmp($task_option->text, $option['answer']) === 0) {
+                            $total_correct_answers++;
+                            $right_answers++;
+                            $is_answered_correctly = "1";
+                        }
+                    } else {
+                        if (filter_var($option['answer'], FILTER_VALIDATE_BOOLEAN)) {
+                            $total_answers++;
+                        }
+                        if (filter_var($task_option->is_right, FILTER_VALIDATE_BOOLEAN) === filter_var($option['answer'], FILTER_VALIDATE_BOOLEAN)) {
+                            $total_correct_answers++;
+                            $right_answers++;
+                            $is_answered_correctly = "1";
+                        }
+                    }
 
-        //                 $result['mark'] = $eq1 + $eq2 + $eq3 + $eq4 + $eq5;
+                            if ($answers_counter === $total_correct_answers) {
+                        $is_task_correct = '1';
+                    }
 
-        //                 echo '</span></span></b><br><hr><br><span class="flaged" style="font-size: 24px">Общий интегративный уровень: <span class="result"><b>';
-//                 if ($result['mark'] >= 70)
-//                     echo 'высокий';
-//                 elseif ($result['mark'] <= 69 && $result['mark'] >= 40)
-//                     echo 'средний';
-//                 else
-//                     echo 'низкий';
-//                 echo '</span></span></div>';
-//             } else {
-//                 $result['mark'] = round((($result['total_correct_task_answers'] - $penalties) / $result['total_tasks']) * 10);
-//             }
-//         } else {
-//             $result['mark'] = 0;
-//         }
+                            if ($option['answer'] != 'false' and strlen($option['answer']) > 0) {
+                        if ($is_answered_correctly == '1') {
+                            $options[$key]['user-answer-class'] = 'is-answered-correctly';
+                        } else {
+                            $options[$key]['user-answer-class'] = 'is-answered-wrong';
+                        }
+                    } else {
+                        $options[$key]['user-answer-class'] = '';
+                    }
 
-        //         $helpToTest = ORM::factory('HelpToTest')
-//             ->where('test_id', '=', $data['testId'])
-//             ->find();
-//         $domain = 'http://helpy.quali.me/';
+                            if ($task_option->is_right === '1') {
+                        $options[$key]['actual-answer-class'] = 'option-is-right';
+                    } else {
+                        $options[$key]['actual-answer-class'] = '';
+                    }
+                    //echo $task_option->is_right;
 
-        //         if (null !== $helpToTest->id) {
-//             $json = $helpToTest->helpy_id;
-//             $division = json_decode($json, true);
-//             $divisionKey = key($division);
+                            //var_dump($options);
+                    $task_option->clear();
+                }
 
-        //             $audienceType = (int) $helpToTest->audience_id;
-//             if ($audienceType === 1) {
-//                 $audience = 'school';
-//             } elseif ($audienceType === 2) {
-//                 $audience = 'university';
-//             }
-//         }
-//         if (!empty($audience)) {
-//             $link = $domain . $divisionKey . '/' . $audience . '/' . $division[$divisionKey];
-//         } else {
-//             $link = $domain;
-//         }
+                    }
+            if ($is_task_correct === '1' && $data['testId'] != 184) {
+                $total_correct_task_answers++;
+            } elseif ($data['testId'] == 184) {
+                $EQ = substr($option['answer'], 0, 1);
+                $total_correct_task_answers += (int) $EQ;
+            }
 
-        //         $content = View::factory('index/tests/v_test_check')
-//             ->bind('test_id', $data['testId'])
-//             ->bind('tasks', $tasks)
-//             ->bind('result', $result)
-//             ->bind('link', $link)
-//             ->bind('laptop', $helpToTest)
-//             ->bind('tmp', $tmp);
 
-        //         /*saving*/
+                    $v = View::factory('index/tasks/v_task_check')
+                ->bind('options', $options)
+                ->bind('task', $task)
+                ->bind('is_task_correct', $is_task_correct)
+                ->bind('total_answers', $total_answers)
+                ->bind('answer_key', $answer_key)
+                ->render();
 
-        //         //     $date = date_create();
-// //     date_format(date_create(), 'dd.m.Y????');
+                    array_push($tmp, $v);
+            $task->clear();
+        }
+        $result['total_tasks'] = $test->tasks->find_all()->count();
+        $result['total_correct_task_answers'] = $total_correct_task_answers;
+        $result['penalties'] = $penalties;
+        $result['mode'] = $data['mode'];
+        $IQorEQ = $this->request->param('audience');
+        if ($result['total_correct_task_answers'] >= $penalties) {
 
-        //         $this->saveResult($data['testId'], $result['mark'], $content);
+                    // Проверка на IQ
+            // IQ Test Словесный
+            if ($data['testId'] == 185) {
+                $result['mark'] = round(90 + ($result['total_correct_task_answers']) * 2.5);
+            }
+            // IQ Test Числовой
+            elseif ($data['testId'] == 186) {
+                $result['mark'] = round(72.5 + ($result['total_correct_task_answers']) * 2.5);
+            }
+            // ШQ Test - Наглядно-Образный
+            elseif ($data['testId'] == 187) {
+                $result['mark'] = round(81.43 + ($result['total_correct_task_answers']) * 1.42);
+            }
+            // EQ Test КОСТЫЛЬ ДЛЯ НАН. Удалить вместе с тестом блять нахуй
+            elseif ($data['testId'] == 184) {
+                echo '<div style="text-align: center"><span class="flaged">Уровень эмоциональной осведомленности: <span class="result"><b>';
+                if ($eq1 >= 14)
+                    echo 'высокий';
+                elseif ($eq1 >= 8 && $eq1 <= 13)
+                    echo 'средний';
+                else
+                    echo 'низкий';
 
-        //         /*
-//            $user_id = 11;
-//            $answer = ORM::factory('Answer');
-//            $answer_option = ORM::factory("Answeroption");
+                        echo '</span></span></b><hr><span class="flaged">Уровень управления своими эмоциями: <span class="result"><b>';
+                if ($eq2 >= 14)
+                    echo 'высокий';
+                elseif ($eq2 >= 8 && $eq2 <= 13)
+                    echo 'средний';
+                else
+                    echo 'низкий';
 
-        //            $answer->values(array(
-//                'test_id' => $data['testId'],
-//                'user_id' => $user_id,
-//                'mark' => '55'
-//            ));
-//            $answer->save();
-//            var_dump($data);
-//            foreach ($data['answers'] as $answer)
-//            {
+                        echo '</span></span></b><hr><span class="flaged">Уровень самомотивации: <span class="result"><b>';
+                if ($eq3 >= 14)
+                    echo 'высокий';
+                elseif ($eq3 >= 8 && $eq3 <= 13)
+                    echo 'средний';
+                else
+                    echo 'низкий';
 
-        //                foreach ($answer['options'] as $option) {
+                        echo '</span></span></b><hr><span class="flaged">Уровень эмпатии: <span class="result"><b>';
+                if ($eq4 >= 14)
+                    echo 'высокий';
+                elseif ($eq4 >= 8 && $eq4 <= 13)
+                    echo 'средний';
+                else
+                    echo 'низкий';
 
-        //                $answer_option->values(array(
-//                    'option_id' => $option['optionId'],
-//                    'answer' => $option['answer']
-//                ));
-//                $answer_option->save();		
-//                $answer_option->clear();
-//                }
+                        echo '</span></span></b><hr><span class="flaged">Уровень управления эмоциями других людей: <span class="result"><b>';
+                if ($eq5 >= 14)
+                    echo 'высокий';
+                elseif ($eq5 >= 8 && $eq5 <= 13)
+                    echo 'средний';
+                else
+                    echo 'низкий';
 
-        //            }
-//            */
-//         $this->template->content = $content;
+                        $result['mark'] = $eq1 + $eq2 + $eq3 + $eq4 + $eq5;
+
+                        echo '</span></span></b><br><hr><br><span class="flaged" style="font-size: 24px">Общий интегративный уровень: <span class="result"><b>';
+                if ($result['mark'] >= 70)
+                    echo 'высокий';
+                elseif ($result['mark'] <= 69 && $result['mark'] >= 40)
+                    echo 'средний';
+                else
+                    echo 'низкий';
+                echo '</span></span></div>';
+            } else {
+                $result['mark'] = round((($result['total_correct_task_answers'] - $penalties) / $result['total_tasks']) * 10);
+            }
+        } else {
+            $result['mark'] = 0;
+        }
+
+                $helpToTest = ORM::factory('HelpToTest')
+            ->where('test_id', '=', $data['testId'])
+            ->find();
+        $domain = 'http://helpy.quali.me/';
+
+                if (null !== $helpToTest->id) {
+            $json = $helpToTest->helpy_id;
+            $division = json_decode($json, true);
+            $divisionKey = key($division);
+
+                    $audienceType = (int) $helpToTest->audience_id;
+            if ($audienceType === 1) {
+                $audience = 'school';
+            } elseif ($audienceType === 2) {
+                $audience = 'university';
+            }
+        }
+        if (!empty($audience)) {
+            $link = $domain . $divisionKey . '/' . $audience . '/' . $division[$divisionKey];
+        } else {
+            $link = $domain;
+        }
+
+                $content = View::factory('index/tests/v_test_check')
+            ->bind('test_id', $data['testId'])
+            ->bind('tasks', $tasks)
+            ->bind('result', $result)
+            ->bind('link', $link)
+            ->bind('laptop', $helpToTest)
+            ->bind('tmp', $tmp);
+
+                /*saving*/
+
+                //     $date = date_create();
+//     date_format(date_create(), 'dd.m.Y????');
+
+                $this->saveResult($data['testId'], $result['mark'], $content);
+
+                /*
+           $user_id = 11;
+           $answer = ORM::factory('Answer');
+           $answer_option = ORM::factory("Answeroption");
+
+                   $answer->values(array(
+               'test_id' => $data['testId'],
+               'user_id' => $user_id,
+               'mark' => '55'
+           ));
+           $answer->save();
+           var_dump($data);
+           foreach ($data['answers'] as $answer)
+           {
+
+                       foreach ($answer['options'] as $option) {
+
+                       $answer_option->values(array(
+                   'option_id' => $option['optionId'],
+                   'answer' => $option['answer']
+               ));
+               $answer_option->save();		
+               $answer_option->clear();
+               }
+
+                   }
+           */
+        $this->template->content = $content;
     }
 
     private function saveResult($testId, $mark, $htmlResult)

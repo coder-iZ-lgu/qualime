@@ -1,4 +1,4 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+f<?php defined('SYSPATH') or die('No direct script access.');
 
 // -- Environment setup --------------------------------------------------------
 
