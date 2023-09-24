@@ -81,7 +81,7 @@ QLTY.ui.tabs = function (undefined){
     enableTabs: function(selectors){
 	if (selectors) {
 	    for (var i = 0; i < selectors.length; i++) {
-		console.log($(selectors[i]));
+
 		$(selectors[i]).removeClass('disabled');
 	    }
 	}

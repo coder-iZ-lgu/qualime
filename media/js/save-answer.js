@@ -20,78 +20,118 @@ const inputsValidator = (inputs) => {
     return validatedInputs
 }
 
-const getStoredAnswersById = (taskId) => {
-    const storedAnswersString = localStorage.getItem(taskId)
-    const storedAnswersObject = JSON.parse(storedAnswersString)
+const getStoredAnswersByTestId = (testId) => {
+    const storedAnswersString = localStorage.getItem(testId)
 
-    return storedAnswersObject || []
+    if (storedAnswersString) {
+        const storedAnswersObject = JSON.parse(storedAnswersString)
+
+        return storedAnswersObject
+    }
+
+    return null
 }
 
-const getStoredAnswers = () => {
-    const storedAnswers = []
+const getStoredAnswersByTaskId = (storedAnswers, taskId) => {
+    if (storedAnswers instanceof Object) {
+        const storedAnswersWithTaskId = storedAnswers[taskId]
 
-    Object.entries(localStorage).forEach(([_, value]) => {
-        const parsedValue = JSON.parse(value)
+        return storedAnswersWithTaskId
+    }
 
-        storedAnswers.push(parsedValue)
-    }, {})
-
-    const flatedAnswers = storedAnswers.flat(1)
-
-    return flatedAnswers
+    return null
 }
 
-const storeAnswer = (taskId, answer) => {
-    const parsedAnswer = JSON.stringify(answer)
+const removeAnswer = (testId) => {
+    localStorage.removeItem(testId)
+}
 
-    return localStorage.setItem(taskId, parsedAnswer)
+const storeAnswer = (testId, answer) => {
+    const parsedStoreAnswerData = JSON.stringify(answer)
+    localStorage.setItem(testId, parsedStoreAnswerData)
+}
+
+const createAnswerObject = (testId, taskId, answer) => {
+    const storedAnswersWithTestId = getStoredAnswersByTestId(testId)
+
+    if (!storedAnswersWithTestId) {
+        const storeAnswerData = {
+            [taskId]: answer
+        }
+
+        return storeAnswerData
+    }
+
+    else {
+        const storeAnswerData = {
+            ...storedAnswersWithTestId,
+            [taskId]: answer
+        }
+
+        return storeAnswerData
+    }
+}
+
+const getTestId = () => {
+    const testId = document.querySelector("#particular-test").getAttribute("data-qlty-test")
+
+    return testId
+}
+
+const getDataForStoreAnswer = (e) => {
+    const target = e.target
+    const taskId = target.name
+    const inputId = target.id
+    const inputType = target.type
+    const inputValue = inputType === "text" ? target.value : target.checked
+    const testId = getTestId()
+
+    const answer = {
+        inputId,
+        inputType,
+        inputValue
+    }
+
+    return [testId, taskId, answer]
 }
 
 const handleInputRadio = (e) => {
-    const inputId = e.target.id
-    const taskId = e.target.name
-    const inputType = e.target.type
-    const isChecked = e.target.checked
-
-    const answer = { inputType, inputId, inputValue: isChecked }
+    const [testId, taskId, answer] = getDataForStoreAnswer(e)
+    const isChecked = answer.inputValue
 
     if (isChecked) {
-        storeAnswer(taskId, answer)
+        const storeAnswerData = createAnswerObject(testId, taskId, [answer])
+
+        storeAnswer(testId, storeAnswerData)
     }
 }
 
 const handleInputCheckbox = (e) => {
-    const inputId = e.target.id
-    const taskId = e.target.name
-    const inputType = e.target.type
-    const isChecked = e.target.checked
+    const [testId, taskId, answer] = getDataForStoreAnswer(e)
+    const isChecked = answer.inputValue
+    const inputId = answer.inputId
 
-    const answer = { inputId, inputType, inputValue: isChecked }
+    const storedAnswersWithTestId = getStoredAnswersByTestId(testId)
+    const storedAnswersWithTaskId = getStoredAnswersByTaskId(storedAnswersWithTestId, taskId) || []
 
     if (isChecked) {
-        const storedAnswers = getStoredAnswersById(taskId)
-        storedAnswers.push(answer)
+        storedAnswersWithTaskId.push(answer)
+        const storeAnswersData = createAnswerObject(testId, taskId, storedAnswersWithTaskId)
 
-        storeAnswer(taskId, storedAnswers)
-    }
+        storeAnswer(testId, storeAnswersData)
+    } else {
+        const filteredAnswers = storedAnswersWithTaskId.filter(answer => answer.inputId != inputId)
+        const storeAnswersData = createAnswerObject(testId, taskId, filteredAnswers)
 
-    else {
-        const storedAnswers = getStoredAnswersById(taskId)
-        const filteredAnswers = storedAnswers.filter(answer => answer.inputId != inputId)
-        console.log(storedAnswers)
-        storeAnswer(taskId, filteredAnswers)
+        storeAnswer(testId, storeAnswersData)
     }
 }
 
 const handleInputText = (e) => {
-    const inputId = e.target.id
-    const taskId = e.target.name
-    const inputType = e.target.type
-    const inputValue = e.target.value
+    const [testId, taskId, answer] = getDataForStoreAnswer(e)
+    const storeAnswerData = createAnswerObject(testId, taskId, [answer])
 
-    const answer = { inputId, inputType, inputValue }
-
-    return storeAnswer(taskId, answer)
+    storeAnswer(testId, storeAnswerData)
 }
 
 const addEventListenerForInputs = (inputs) => {
@@ -119,19 +159,30 @@ const addEventListenerForInputs = (inputs) => {
 }
 
 const addStoredAnswersToInputs = () => {
-    const storedAnswers = getStoredAnswers()
+    const testId = getTestId()
+    const storedAnswers = getStoredAnswersByTestId(testId)
 
-    storedAnswers.forEach(({ inputId, inputType, inputValue }) => {
-        const input = document.querySelector(`#${inputId}`)
+    Object.entries(storedAnswers).forEach(([_, answers]) => {
+        answers.forEach(({ inputId, inputType, inputValue }) => {
+            const input = document.querySelector(`#${inputId}`)
 
-        if (inputType === "text") {
-            input.value = inputValue
-        } else {
-            input.checked = inputValue
-        }
+            if (inputType === "text") {
+                input.value = inputValue
+            } else {
+                input.checked = inputValue
+            }
+        })
+
     })
+}
 
+const addEventListenerToCheckButton = () => {
+    const testId = getTestId()
+    const checkButton = document.querySelector("#check-button")
 
+    checkButton.addEventListener("click", () => {
+        removeAnswer(testId)
+    })
 }
 
 const main = () => {
@@ -140,6 +191,7 @@ const main = () => {
 
     addEventListenerForInputs(validatedInputs)
     addStoredAnswersToInputs()
+    addEventListenerToCheckButton()
 }
 
 document.addEventListener("DOMContentLoaded", main)
